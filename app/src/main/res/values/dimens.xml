@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="component_add_height">60dp</dimen>
+    <dimen name="item_margin">4dp</dimen>
+    <dimen name="card_dimen">16dp</dimen>
+    <dimen name="image_dimen">100dp</dimen>
+</resources>
