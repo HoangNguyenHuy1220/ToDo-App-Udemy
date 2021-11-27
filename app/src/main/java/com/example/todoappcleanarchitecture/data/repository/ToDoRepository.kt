@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 class ToDoRepository(private val toDoDao: ToDoDao) {
 
-    val getAllData: LiveData<List<ToDo>> = toDoDao.getAllData()
+    val getAllData: Flow<List<ToDo>> = toDoDao.getAllData()
 
     suspend fun insertData(data: ToDo) {
         toDoDao.insertData(data)
@@ -27,5 +27,17 @@ class ToDoRepository(private val toDoDao: ToDoDao) {
 
     suspend fun deleteAll(listData: List<ToDo>) {
         toDoDao.deleteAll(listData)
+    }
+
+    fun searchDatabase(query: String): LiveData<List<ToDo>> {
+        return toDoDao.searchDatabase(query)
+    }
+
+    fun sortHighToLow(): LiveData<List<ToDo>> {
+        return toDoDao.sortHighToLow()
+    }
+
+    fun sortLowToHigh(): LiveData<List<ToDo>> {
+        return toDoDao.sortLowToHigh()
     }
 }

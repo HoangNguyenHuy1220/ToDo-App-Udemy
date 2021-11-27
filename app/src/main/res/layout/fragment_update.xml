@@ -8,9 +8,6 @@
             name="viewModel"
             type="com.example.todoappcleanarchitecture.data.viewmodel.ToDoViewModel" />
         <variable
-            name="updateFragment"
-            type="com.example.todoappcleanarchitecture.fragments.update.UpdateFragment" />
-        <variable
             name="data"
             type="com.example.todoappcleanarchitecture.data.model.ToDo" />
     </data>

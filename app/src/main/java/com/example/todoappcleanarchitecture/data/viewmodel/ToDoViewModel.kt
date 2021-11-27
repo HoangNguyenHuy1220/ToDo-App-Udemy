@@ -4,21 +4,19 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.todoappcleanarchitecture.R
 import com.example.todoappcleanarchitecture.data.model.Priority
 import com.example.todoappcleanarchitecture.data.model.ToDo
 import com.example.todoappcleanarchitecture.data.repository.ToDoRepository
-import kotlinx.coroutines.NonDisposableHandle.parent
 import kotlinx.coroutines.launch
 
 class ToDoViewModel(private val repository: ToDoRepository): ViewModel() {
 
-    private val _allData: LiveData<List<ToDo>> = repository.getAllData
+    private var _allData = repository.getAllData.asLiveData()
     val allData: LiveData<List<ToDo>>
         get() = _allData
+
 
     private val _listener: AdapterView.OnItemSelectedListener = object :
         AdapterView.OnItemSelectedListener {
@@ -66,12 +64,6 @@ class ToDoViewModel(private val repository: ToDoRepository): ViewModel() {
         }
     }
 
-    /*fun deleteAll() {
-        viewModelScope.launch {
-            repository.deleteAll()
-        }
-    }*/
-
     fun verifyData(title: String, description: String): Boolean {
         return (title.isNotEmpty() && description.isNotEmpty())
     }
@@ -108,5 +100,17 @@ class ToDoViewModel(private val repository: ToDoRepository): ViewModel() {
         viewModelScope.launch {
             repository.deleteAll(listData)
         }
+    }
+
+    fun searchDatabase(query: String):LiveData<List<ToDo>> {
+        return repository.searchDatabase(query)
+    }
+
+    fun sortHighToLow(): LiveData<List<ToDo>> {
+        return repository.sortHighToLow()
+    }
+
+    fun sortLowToHigh(): LiveData<List<ToDo>> {
+        return repository.sortLowToHigh()
     }
 }

@@ -5,7 +5,6 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.todoappcleanarchitecture.R
@@ -35,7 +34,6 @@ class UpdateFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_update, container, false)
         binding.apply {
             viewModel = sharedViewModel
-            updateFragment = this@UpdateFragment
             data = args.data
             lifecycleOwner = this@UpdateFragment
         }
@@ -53,7 +51,7 @@ class UpdateFragment : Fragment() {
             R.id.menu_save -> {
                 updateData()
             }
-            else -> showDialog()
+            R.id.menu_delete -> showDialog()
         }
         return super.onOptionsItemSelected(item)
     }

@@ -1,4 +1,4 @@
-package com.example.todoappcleanarchitecture.utils
+package com.example.todoappcleanarchitecture.fragments
 
 import android.view.View
 import android.widget.AdapterView
@@ -14,14 +14,36 @@ import com.example.todoappcleanarchitecture.adapter.ToDoAdapter
 import com.example.todoappcleanarchitecture.data.model.Priority
 import com.example.todoappcleanarchitecture.data.model.ToDo
 
+/*LIST FRAGMENT*/
+
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, listData: List<ToDo>?) {
     listData?.let {
         val adapter = recyclerView.adapter as ToDoAdapter
         adapter.submitList(it)
+        recyclerView.scheduleLayoutAnimation()
     }
 }
 
+@BindingAdapter("imageStatus")
+fun bindImageStatus(imageView: ImageView, listData: List<ToDo>?) {
+    listData?.let {
+        imageView.visibility =
+            if (listData.isEmpty()) View.VISIBLE
+            else View.GONE
+    }
+}
+
+@BindingAdapter("textStatus")
+fun bindTextStatus(textView: TextView, listData: List<ToDo>?) {
+    listData?.let {
+        textView.visibility =
+            if (listData.isEmpty()) View.VISIBLE
+            else View.GONE
+    }
+}
+
+// ROW_LAYOUT
 @BindingAdapter("priority")
 fun bindPriorityColor(cardView: CardView, priority: Priority) {
 
@@ -52,23 +74,7 @@ fun bindPriority(spinner: Spinner, priority: Priority) {
     )
 }
 
-@BindingAdapter("imageStatus")
-fun bindImageStatus(imageView: ImageView, listData: List<ToDo>?) {
-    listData?.let {
-        imageView.visibility =
-            if (listData.isEmpty()) View.VISIBLE
-            else View.GONE
-    }
-}
 
-@BindingAdapter("textStatus")
-fun bindTextStatus(textView: TextView, listData: List<ToDo>?) {
-    listData?.let {
-        textView.visibility =
-            if (listData.isEmpty()) View.VISIBLE
-            else View.GONE
-    }
-}
 
 @BindingAdapter("selectedItemColor")
 fun bindSelectedItemColor(spinner: Spinner, listener: AdapterView.OnItemSelectedListener) {

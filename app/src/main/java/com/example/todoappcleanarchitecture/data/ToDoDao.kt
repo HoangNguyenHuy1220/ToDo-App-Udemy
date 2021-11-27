@@ -3,6 +3,7 @@ package com.example.todoappcleanarchitecture.data
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.todoappcleanarchitecture.data.model.ToDo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ToDoDao {
@@ -23,8 +24,20 @@ interface ToDoDao {
     suspend fun deleteAll(listData: List<ToDo>)
 
     @Query("SELECT * FROM todo_table ORDER BY id ASC")
-    fun getAllData(): LiveData<List<ToDo>>
+    fun getAllData(): Flow<List<ToDo>>
 
-    /*@Query("DELETE FROM todo_table")
-    suspend fun deleteAll()*/
+    @Query("SELECT * FROM todo_table WHERE title LIKE :query")
+    fun searchDatabase(query: String): LiveData<List<ToDo>>
+
+    @Query("SELECT * FROM todo_table ORDER BY CASE " +
+            "WHEN priority LIKE 'H%' THEN 1 " +
+            "WHEN priority LIKE 'M%' THEN 2 " +
+            "WHEN priority LIKE 'L%' THEN 3 END")
+    fun sortHighToLow(): LiveData<List<ToDo>>
+
+    @Query("SELECT * FROM todo_table ORDER BY CASE " +
+            "WHEN priority LIKE 'L%' THEN 1 " +
+            "WHEN priority LIKE 'M%' THEN 2 " +
+            "WHEN priority LIKE 'H%' THEN 3 END")
+    fun sortLowToHigh(): LiveData<List<ToDo>>
 }
